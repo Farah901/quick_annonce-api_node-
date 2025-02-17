@@ -102,7 +102,7 @@ const PostAd = () => {
             <option value="Rabat">Rabat</option>
             <option value="Marrakech">Marrakech</option>
             <option value="Fez">Fès</option>
-            <option value="Tangier">Tangier</option>
+            <option value="Tanger">Tanger</option>
             <option value="Agadir">Agadir</option>
             <option value="Agadir">Meknès</option>
           </select>

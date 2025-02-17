@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './slices/userSlice';
  // Import du logo
+import logo from '../public/images/logo2.png';
 import './navbar.css';
 
 const Navbar = () => {
@@ -27,7 +28,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="logo">
           <Link to="/">
-            <img src="assets/images/logo2.png" alt="Logo" className="logo-image" />
+            <img src={logo} alt="Logo" className="logo-image" />
           </Link>
         </div>
 

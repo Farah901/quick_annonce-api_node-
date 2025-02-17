@@ -2,33 +2,39 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./Home.css";
-import {annonces} from "./ManageAds";
+import { annonces } from "./ManageAds";
 
+// Import images statically at the top of the file
+import appipiImage from './assets/images/appipi.jpg';
+import clothessseImage from './assets/images/clothessse.jpg';
+import electronicsImage from './assets/images/electronics.jpg';
+import jobbbsImage from './assets/images/jobbbs.jpg';
+import vihiclesImage from './assets/images/vihicles.jpg';
 
 const categories = [
   {
     name: "Apartment",
-    image: import("./assets/images/appipi.jpg"),
+    image: appipiImage,
     path: "/category/Apartments",
   },
   {
     name: "Clothes",
-    image: import("./assets/images/clothessse.jpg"),
+    image: clothessseImage,
     path: "/category/Clothes",
   },
   {
     name: "Electronics & Technologies",
-    image: import("./assets/images/electronics.jpg"),
+    image: electronicsImage,
     path: "/category/Electronics & Technologies",
   },
   {
     name: "Jobs & Internship",
-    image: import("./assets/images/jobbbs.jpg"),
+    image: jobbbsImage,
     path: "/category/Jobs & Internship",
   },
   {
     name: "Vehicles",
-    image: import("./assets/images/vihicles.jpg"),
+    image: vihiclesImage,
     path: "/category/Vehicles",
   },
 ];
@@ -68,7 +74,6 @@ const Home = () => {
     );
     setAds((prevAds) => [...prevAds, ...newAds]); // Ajouter seulement les nouvelles annonces
   }, []);  // Ajoutez ici `ads` pour résoudre l'avertissement
-  
 
   const deleteAd = (index) => {
     const newAds = [...ads];
@@ -76,6 +81,7 @@ const Home = () => {
     setAds(newAds);
     localStorage.setItem("ads", JSON.stringify(newAds)); // Sauvegarder dans le localStorage
   };
+
   const filteredProducts = ads.filter((product) => {
     return (
       (selectedCategory === "All Categories" ||
@@ -88,12 +94,8 @@ const Home = () => {
     <div className="all">
       <div className="home-container">
         <div className="home-content">
-        {/* <button className="dark-mode-toggle" onClick={toggleDarkMode}>
-  {darkMode ? "🌙" : "☀️"}
-</button> */}
           <div className="text-container">
             <h2 className="tit">{t("title")}</h2>
-            {/* <button className="buy-button">{t("buyNow")}</button> */}
           </div>
         </div>
 
@@ -172,7 +174,6 @@ const Home = () => {
                   <b>City:</b> {product.city}
                 </p>
               </div>
-              {/* Afficher le bouton de suppression uniquement pour les annonces ajoutées via le formulaire */}
               {product.id > annonces.length && (
                 <div className="btncards">
                   <button
