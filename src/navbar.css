@@ -1,0 +1,110 @@
+/* Navbar Styles */
+.navbar {
+    background-color: white;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-top: 30px;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+  }
+  
+  .logo img {
+    width: 130px; /* Ajuste la largeur selon ton besoin */
+    height: auto; /* Garde les proportions */
+    max-height: 130px;
+  }
+  
+  
+  .menu-items {
+    display: flex;
+    gap: 24px;
+    list-style-type: none;
+
+  }
+  
+  .menu-link {
+    color: black;
+    font-weight: 500;
+    transition: color 0.3s;
+    text-decoration: none;  /* Suppression de la décoration de texte */
+  }
+  
+  .menu-link:hover {
+    color: #4a4a4a; /* Effet de couleur sur le survol */
+  }
+  
+  .burger-button {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+  }
+  
+
+  .menu-link.logout-button {
+    background-color: #d9534f; /* Rouge doux */
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    text-align: center;
+    /* display: inline-block; */
+    margin-top: -10px;
+}
+
+.menu-link.logout-button:hover {
+    background-color: #c9302c; /* Rouge plus foncé */
+    transform: scale(1.05);
+}
+
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
+    .menu-items {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 100%;
+      padding: 16px 0;
+    }
+  
+    .menu-items.open {
+      display: flex;
+    }
+  
+    .burger-button {
+      display: block;
+    }
+    
+    .menu-link {
+      font-size: 18px;
+      width: 100%; /* Aligner les liens à 100% de la largeur */
+      text-align: center; /* Centrer le texte dans le menu mobile */
+    }
+  
+    .menu-link:hover {
+      color: #4a4a4a; /* Effet de couleur sur le survol */
+    }
+  }
+  

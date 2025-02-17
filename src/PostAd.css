@@ -1,0 +1,109 @@
+/* Conteneur principal du formulaire */
+.form-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Titre */
+.titrer {
+    font-size: 28px;
+    color: #6b6929;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Structure du formulaire */
+.post-ad-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+/* Chaque champ */
+.form-group {
+    width: 44%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #656439;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Champs uniformisés */
+.form-group input,
+.form-group textarea,
+.form-group select,
+.form-group input[type="file"] {
+    width: 100%; /* Tous les champs ont la même largeur */
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Effet focus */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #605935;
+    box-shadow: 0 0 8px rgba(211, 209, 88, 0.2);
+    background: white;
+}
+
+/* Ajustement pour la description */
+.form-group textarea {
+    height: 70px;
+    resize: vertical;
+}
+
+/* Champ fichier */
+.form-group input[type="file"] {
+    padding: 12px;
+    cursor: pointer;
+    width: 235px;
+    background: white;
+}
+
+/* Bouton de soumission */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background-color: rgb(79, 97, 53);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.03);
+}
+
+.submit-btn:active {
+    transform: scale(0.90);
+}
+
+/* Ajustement pour les écrans mobiles */
+@media (max-width: 600px) {
+    .form-group {
+        width: 100%;
+    }
+}

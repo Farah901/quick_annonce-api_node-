@@ -1,0 +1,15 @@
+/* Mode clair par défaut */
+body {
+  background-color: white;
+  color: black;
+}
+
+/* Mode sombre */
+.dark-mode {
+  background-color: #333;
+  color: white;
+}
+
+.home-container {
+  transition: background-color 0.3s, color 0.3s;
+}

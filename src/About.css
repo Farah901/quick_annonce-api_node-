@@ -1,0 +1,122 @@
+/* Conteneur général */
+.about-container {
+    margin: 0px auto;
+    padding: 40px;
+    background: #e1eacd;
+    text-align: left;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-top: 0px;
+    overflow: hidden;  /* Empêche le scroll vertical et horizontal */
+    height: 100%;
+    margin-top: 50px;
+}
+
+/* Grand titre avec animation */
+.about-title {
+    font-size: 70px;
+    font-weight: bold;
+    color: black;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+     /* margin-left: 0; */
+    overflow: hidden;
+    animation: fadeInDown 1s ease-out;
+    color: #152a1d;
+   
+}
+
+/* Animation du titre */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Conteneur des images + texte */
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Bloc individuel avec image + texte */
+.about-item {
+    flex: 1;
+    text-align: left;  /* Alignement du texte à gauche */
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.about-image {
+    width: 40%;  /* Réduire la taille des images */
+    max-width: 300px;  /* Taille max des images */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Effet au survol */
+.about-image:hover {
+    transform: scale(1.05);
+}
+
+/* Texte à côté des images */
+.about-item p {
+    font-size: 20px;
+    color: #444;
+}
+
+/* Paragraphe en dessous des images */
+.about-footer {
+    margin-top: 0px;
+    padding-bottom: 0;
+}
+
+.about-footer p {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+    max-width: 1000px;
+    margin: 10px auto;
+    font-weight: 500;
+}
+.quick{
+color: #152a1d ;
+
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .about-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .about-image {
+        max-width: 100%;
+    }
+
+    .about-item {
+        text-align: center;  /* Centrer le texte pour les petits écrans */
+    }
+}
+
+@media (max-width: 600px) {
+    .about-title {
+        font-size: 40px;
+    }
+
+    .about-footer p {
+        font-size: 16px;
+    }
+}
