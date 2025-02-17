@@ -261,8 +261,8 @@
 .product-card {
   display: flex;
   flex-direction: column;
-  /* width: 260px;
-  background: white; */
+   width: 260px;
+  /*background: white; */
   /* border-radius: 15px; */
   /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   padding: 15px;
@@ -296,7 +296,8 @@
 /* Informations du produit */
 .product-info {
   text-align: left;
-  padding: 10px 0;
+  padding: 10px 10px;
+  height: 110px;
 }
 
 .product-info h3 {
@@ -321,6 +322,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  width: 100%;
 }
 
 /* Bouton "Message" */
@@ -345,6 +347,7 @@
   background: #d9534f;
   color: white;
   border: none;
+  width: 100%;
   padding: 10px;
   border-radius: 20px;
   font-size: 14px;
