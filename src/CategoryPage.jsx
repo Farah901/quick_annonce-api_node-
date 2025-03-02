@@ -12,11 +12,11 @@ const CategoryPage = () => {
       try {
         const response = await fetch(`https://api-node-quick-annonce.vercel.app/api/annonces`);
         const data = await response.json();
-        setAds(data);
+        setAds(data.articles);
 
         // Filter ads based on category (case insensitive)
-        const filtered = data.filter(
-          (ad) => ad.category === categoryName
+        const filtered = data.articles.filter(
+          (ad) => ad.category.toLowerCase() === categoryName.toLowerCase()
         );
         setFilteredAds(filtered);
       } catch (error) {
@@ -46,7 +46,7 @@ const CategoryPage = () => {
               <div className="product-card">
                 <div className="image-container">
                   <img
-                    src={ad.image_url}
+                    src={ad.image}
                     alt={ad.title}
                     className="product-image"
                   />
