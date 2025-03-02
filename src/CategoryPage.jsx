@@ -1,41 +1,71 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { annonces } from "./ManageAds";
-import './CategoryPage.css'; // Assurez-vous que le chemin est correct
 
 const CategoryPage = () => {
-  const { categoryName } = useParams();
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { categoryName } = useParams(); // Get category from URL
+  const [ads, setAds] = useState([]);
+  const [filteredAds, setFilteredAds] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const filtered = annonces.filter(product => product.category === categoryName);
-    console.log("Filtered Products:", filtered); // Vérifiez que les produits filtrés sont corrects
-    setFilteredProducts(filtered);
-  }, [categoryName]);
+    const fetchAds = async () => {
+      try {
+        const response = await fetch(`https://api-node-quick-annonce.vercel.app/api/annonces`);
+        const data = await response.json();
+        setAds(data);
 
-  return ( // Ajoutez le return pour afficher le contenu
+        // Filter ads based on category (case insensitive)
+        const filtered = data.filter(
+          (ad) => ad.category === categoryName
+        );
+        setFilteredAds(filtered);
+      } catch (error) {
+        console.error("Error fetching ads:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAds();
+  }, [categoryName]); // Re-fetch when category changes
+
+  if (loading) return <p>Loading ads...</p>;
+
+  return (
     <div>
-      <h2>{categoryName} Listings</h2>
+      <br /><br /><br /><br /><br /><br/>
+      <h1>{categoryName.toUpperCase()}</h1>
+
       <div className="products-section">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product, index) => (
-            <div className="product-card" key={index}>
-              <div className="image-container">
-                <img src={product.image} alt={product.title} className="product-image" />
-              </div>
-              <div className="product-info">
-                <h3>{product.title}</h3>
-                <p>{product.description}</p>
-                <p><b>Price:</b> {product.price}</p>
-                <p><b>City:</b> {product.city}</p>
-              </div>
-              <div className="btncards">
-                <button className="message-button">Message</button>
+        {filteredAds.length > 0 ? (
+          filteredAds.map((ad) => (
+            <div
+              key={ad.id}
+              className="annonce-card"
+            >
+              <div className="product-card">
+                <div className="image-container">
+                  <img
+                    src={ad.image_url}
+                    alt={ad.title}
+                    className="product-image"
+                  />
+                </div>
+                <div className="product-info">
+                  <h3>{ad.title}</h3>
+                  <p>
+                    <b style={{ color: "red", fontSize: "1.2em" }}>Price:</b>{" "}
+                    {ad.price} $
+                  </p>
+                </div>
+                <div className="btncards">
+                  <button className="message-button">Message</button>
+                </div>
               </div>
             </div>
           ))
         ) : (
-          <p>No products found in this category.</p>
+          <p>No ads found in this category.</p>
         )}
       </div>
     </div>

@@ -1,6 +1,7 @@
 /* CategoryPage.css */
 .category-page {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;; /* Remplacez 'Arial' par la police de votre choix */
+    max-width: 100%;
   }
   
   /* Vous pouvez ajouter des styles spécifiques pour différents éléments si nécessaire */

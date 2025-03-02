@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./Home.css";
-import { annonces } from "./ManageAds";
 
 // Import images statically at the top of the file
 import appipiImage from './assets/images/appipi.jpg';
@@ -64,31 +63,52 @@ const Home = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedCity, setSelectedCity] = useState("All Cities");
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [ads, setAds] = useState([...annonces]);
-
+  // Fetch products from local API
   useEffect(() => {
-    const storedAds = JSON.parse(localStorage.getItem("ads")) || [];
-    const newAds = storedAds.filter(
-      (storedAd) => !ads.some((ad) => ad.id === storedAd.id)
-    );
-    setAds((prevAds) => [...prevAds, ...newAds]); // Ajouter seulement les nouvelles annonces
-  }, []);  // Ajoutez ici `ads` pour résoudre l'avertissement
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://api-node-quick-annonce.vercel.app/api/annonces"); // Replace with your actual API endpoint
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data.articles || data); // Adjust based on API response structure
+        setIsLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setIsLoading(false);
+      }
+    };
 
-  const deleteAd = (index) => {
-    const newAds = [...ads];
-    newAds.splice(index, 1);
-    setAds(newAds);
-    localStorage.setItem("ads", JSON.stringify(newAds)); // Sauvegarder dans le localStorage
+    fetchProducts();
+  }, []);
+
+  // Filter products based on selected category and city
+  const filteredProducts = products
+    .filter((product) => {
+      return (
+        (selectedCategory === "All Categories" ||
+          product.category === selectedCategory) &&
+        (selectedCity === "All Cities" || product.city === selectedCity)
+      );
+    })
+    .slice(0, 8); // Limit to 8 products
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const handleCardClick = (id) => {
+    navigate(`/annonces/${id}`);
   };
-
-  const filteredProducts = ads.filter((product) => {
-    return (
-      (selectedCategory === "All Categories" ||
-        product.category === selectedCategory) &&
-      (selectedCity === "All Cities" || product.city === selectedCity)
-    );
-  });
 
   return (
     <div className="all">
@@ -96,23 +116,38 @@ const Home = () => {
         <div className="home-content">
           <div className="text-container">
             <h2 className="tit">{t("title")}</h2>
+            <button className="buy-button">{t("buyNow")}</button>
           </div>
         </div>
 
         <div className="info-section">
           <h2>{t("welcome")}</h2>
           <p>{t("description")}</p>
-          <button className="post-ad-button">
+          <button
+            className="post-ad-button"
+            onClick={() => {
+              const user = localStorage.getItem("user");
+
+              if (user) {
+                navigate("/postad");
+              } else {
+                navigate("/login");
+              }
+            }}
+          >
             <b>{t("postAd")}</b>
           </button>
         </div>
 
+        {/* Section catégories */}
         <div className="categories">
           {categories.map((category, index) => (
             <div
               key={index}
               className="category-card"
-              onClick={() => navigate(category.path)}
+              onClick={() =>
+                navigate(`/category/${category.name.toLowerCase()}`)
+              }
             >
               <div className="category-image-container">
                 <img
@@ -126,6 +161,7 @@ const Home = () => {
           ))}
         </div>
 
+        {/* Filters Section */}
         <div className="filters-container">
           <select
             className="filter-select"
@@ -138,6 +174,7 @@ const Home = () => {
               </option>
             ))}
           </select>
+
           <select
             className="filter-select"
             value={selectedCity}
@@ -151,46 +188,48 @@ const Home = () => {
           </select>
         </div>
 
+        {/* Section produits */}
         <div className="products-section">
           {filteredProducts.map((product, index) => (
-            <div className="product-card" key={index}>
-              <div className="image-container">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="product-image"
-                />
-              </div>
-              <div className="product-info">
-                <h3>{product.title}</h3>
-                <p>{product.description}</p>
-                <p>
-                  <b>Category:</b> {product.category}
-                </p>
-                <p>
-                  <b>Price:</b> {product.price}
-                </p>
-                <p>
-                  <b>City:</b> {product.city}
-                </p>
-              </div>
-              {product.id > annonces.length && (
-                <div className="btncards">
-                  <button
-                    className="delete-button"
-                    onClick={() => deleteAd(index)}
-                  >
-                    Delete
-                  </button>
+            <div
+              key={product._id || index} // Use _id if present
+              className="annonce-card"
+              onClick={() => handleCardClick(product._id)}
+            >
+              <div className="product-card">
+                <div className="image-container">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="product-image"
+                  />
                 </div>
-              )}
-              <div className="btncards">
-                <button className="message-button">Message</button>
+                <div className="product-info">
+                  <h3>{product.title}</h3>
+                  <p>
+                    <b style={{ color: "red", fontSize: "1.2em" }}>Price:</b>{" "}
+                    {product.price} $
+                  </p>
+                </div>
+                <div className="btncards">
+                  <button className="message-button">Message</button>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
+        {/* View All Button */}
+        <div className="view-all-container">
+          <button
+            className="view-all-btn"
+            onClick={() => navigate("/all-annonces")}
+          >
+            View All Annonces
+          </button>
+        </div><br /><br />
+
+        {/* Footer */}
         <footer className="footer">
           <div className="footer-content">
             <div className="footer-section">
@@ -212,14 +251,16 @@ const Home = () => {
               </ul>
             </div>
             <div className="footer-section">
-              <h3>Popular Pages</h3>
+              <h3>Legal</h3>
               <ul>
-                <li>Our Services</li>
-                <li>Contact Us</li>
-                <li>Blog</li>
-                <li>About Us</li>
+                <li>Privacy Policy</li>
+                <li>Terms & Conditions</li>
+                <li>Cookies Policy</li>
               </ul>
             </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2025 Your Company. All rights reserved.</p>
           </div>
         </footer>
       </div>
