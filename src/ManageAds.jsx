@@ -26,11 +26,11 @@ const ManageAds = () => {
 
     try {
       await axios.delete(`https://api-node-quick-annonce.vercel.app/api/annonces/${id}`);
-      setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
+      setAds((prevAds) => prevAds.filter((ad) => ad._id !== id));
     } catch (error) {
       console.error("Error deleting ad:", error);
     }
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
